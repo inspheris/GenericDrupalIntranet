@@ -1,0 +1,204 @@
+<?php
+
+	function moka3ab_form_alter(&$form, &$form_state, $form_id) {
+		global $user;
+		//dpm($form);
+	// 	dpm($user);
+		//dpm($form);
+		//dpm($form_id); 
+		
+		if  ( $form['#id'] === 'views-exposed-form-recherche-du-documents-page-1' ) {
+			$form['field_files_description']['#type']  = 'hidden';
+			$form['submit']['#type']  = 'hidden';
+		} else if  ( $form['#id'] === 'views-exposed-form-recherche-du-documents-page-2' ) {
+			$form['title']['#type']  = 'hidden';
+			$form['submit']['#type']  = 'hidden';
+		} else if  ( $form['#id'] === 'views-exposed-form-recherche-du-documents-page-3' ) {
+			$form['body_value']['#type']  = 'hidden';
+			$form['submit']['#type']  = 'hidden';
+		} else if  ( $form['#id'] === 'views-exposed-form-recherche-documents-solr-page' ) {
+			$form['content']['#type']  = 'hidden';
+			$form['label']['#type']  = 'hidden';
+			$form['submit']['#type']  = 'hidden';
+		}
+		
+		if  ( $form_id === 'i18n_string_locale_translate_edit_form' ) {
+			unset($form['#validate']);
+			//dpm($form);
+		}
+		
+		if ($form_id === 'article_node_form') {
+		
+			foreach ($form['field_categories']['und']['#options'] as $tid => $tname) {
+				foreach ( taxonomy_get_parents_all($tid) as $parent ) {
+					if ( $parent->tid == '1') {$form['field_categories']['und'][$tid]['#attributes'] = array('class' => array('intranet'));}
+					else if ( $parent->tid == '2') { $form['field_categories']['und'][$tid]['#attributes'] = array('class' => array('espace-rh'));}
+					else if ( $parent->tid == '3') {$form['field_categories']['und'][$tid]['#attributes'] = array('class' => array('espace-dmn'));}
+				}
+			}
+			
+			//dpm($form);
+			$form['field_categories']['und'][1]['#disabled'] = TRUE;
+			//$form['field_categories']['und'][1]['#attributes'] = array('class' => array('intranet'));
+			$form['field_categories']['und'][2]['#disabled'] = TRUE;
+			$form['field_categories']['und'][3]['#disabled'] = TRUE;
+			
+			hide($form['field_moderator_homepage_feeds']);
+			hide($form['field_moderator_slider']);
+			
+			if (array_intersect(array('Redacteur DMN', 'Redacteur Exclu', 'Redacteur Actu', 'Editeur RH'), $user->roles)) {
+				/*hide($form['field_publishing_date']);*/
+				hide($form['field_push_it_to_the_slider']);
+			};
+			if (array_intersect(array('Redacteur DMN', 'Redacteur Actu', 'Editeur RH'), $user->roles)) {
+				hide($form['field_cat_gories_exclusives']);
+			};
+			/* if (array_intersect(array('Redacteur Exclu'), $user->roles)) {
+				hide($form['field_categories']);
+				hide($form['field_sous_cat_gories']);
+			}; */
+			
+			
+			//	if (array_intersect(array('contributor', 'RH contributor1'), $user->roles)) $form['field_categories']['und']['#options'][1]['#disabled'] = TRUE;
+			//dpm(empty($ar));
+		}		// end of the article_node_form
+		
+		if ($form_id === 'events_node_form') {
+			hide($form['field_moderator_homepage_feeds']);
+			
+		}
+		
+		if ($form_id === 'events_node_form' OR $form_id === 'offre_d_emploi_node_form') {
+			if (array_intersect(array('contributor', 'RH contributor', 'DMN contributor', 'Intranet contributor'), $user->roles)) {
+				hide($form['field_homepage_feeds']);
+			};		
+		}
+		
+	}
+	
+	 /*function moka3ab_entity_view($entity, $type, $view_mode, $langcode) {
+	  dpm($entity);
+	} */
+	
+	function moka3ab_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity, $env_id) {
+	  $document->addField('ss_article_image', $entity->field_article_image['und'][0]['uri']);
+	  if (isset($entity->field_categories['und'][0]['tid'])) {				/* check if main categories is set so it can be indexed*/
+		foreach ($entity->field_categories['und'] as $cname) { 
+			$document->setMultiValue('sm_field_cats_id', $cname['tid']);
+			$document->setMultiValue('sm_field_cats_name', $cname['taxonomy_term']->name);
+			$document->setMultiValue('sm_field_cats_color', $cname['taxonomy_term']->field_coloours['und'][0]['value']);
+		} /* you can add other categories here for indexing like exclu categories*/
+	/* 	foreach ($entity->field_categories['und'] as $color) { 
+		   $document->setMultiValue('sm_field_cats_color', $color['taxonomy_term']->field_coloours['und'][0]['value']);
+		} */
+	  }  
+	  $document->addField('ss_article_files_count', count($entity->field_files['und']));
+	  $document->addField('ss_article_publish', $entity->field_publishing_date['und'][0]['value']);
+	}
+	
+	function moka3ab_apachesolr_query_prepare(DrupalSolrQueryInterface $query) {
+	  $query->addParam('fl', 'ss_article_image');
+	  $query->addParam('fl', 'sm_field_cats_id');
+	  $query->addParam('fl', 'sm_field_cats_name');
+	  $query->addParam('fl', 'sm_field_cats_color');
+	  $query->addParam('fl', 'ss_article_files_count');
+	  $query->addParam('fl', 'ss_article_publish');
+	}
+	
+	function moka3ab_apachesolr_process_results(&$results, DrupalSolrQueryInterface $query) {
+	 /* dpm($results); 
+	 global $pager_total_items;
+	 dpm($pager_total_items); */
+	  $sharedSolr = &drupal_static('solr_reslts');
+	  $sharedSolr['total'] = count($results);
+	  $sharedSolr['results'] = array();
+	  foreach ($results as $row) {
+			$i =0;
+			if (isset($row['fields']['sm_field_cats_id'][0])) {
+				foreach ($row['fields']['sm_field_cats_id'] as $tid) {
+					if (isset($sharedSolr['results'][$tid])) {
+						$sharedSolr['results'][$tid]['count'] += 1;
+					} else {
+						$sharedSolr['results'][$tid] = array( 'name' => $row['fields']['sm_field_cats_name'][$i],'colour' => $row['fields']['sm_field_cats_color'][$i], 'count' => 1);
+					}
+					$i++;
+				}
+			}
+		}
+	  /* dpm($sharedSolr); */
+	  
+	}
+	
+	/* function moka3ab_entity_view($entity, $type, $view_mode, $langcode) {
+	  dpm($entity);
+	} */
+	
+	/* function moka3ab_search_page($results) {
+		dpm($results);
+	} */
+	
+	function moka3ab_menu() {
+		$items['moka3ab/docs/autocomplete'] = array(
+		  'page callback' => 'moka3ab_docs_titles',
+		  'access arguments' => array('access content'),
+		  'type' => MENU_NORMAL_ITEM,
+		);
+		
+		$items['moka3ab/solr/autocomplete'] = array(
+		  'page callback' => 'moka3ab_art_words',
+		  'access arguments' => array('access content'),
+		  'type' => MENU_NORMAL_ITEM,
+		);
+		return $items;
+	}
+	
+	function moka3ab_docs_titles () {
+		$view = views_get_view('recherche_du_documents');
+		$view->set_display('page_1');
+		$view->exposed_input['field_files_description'] = check_plain(arg(3));
+		$view->exposed_raw_input['field_files_description'] = check_plain(arg(3));
+		$view->exposed_data['field_files_description'] = check_plain(arg(3));
+		
+		//dpm($view);
+		$view->pre_execute();
+		$view->execute();
+		print $view->render();
+	}
+
+	function moka3ab_art_words () {
+		$view = views_get_view('recherche_documents_solr');
+		$view->set_display('page');
+		$view->exposed_input['content'] = check_plain(arg(3));
+		$view->exposed_raw_input['content'] = check_plain(arg(3));
+		$view->exposed_data['content'] = check_plain(arg(3));
+		$view->exposed_input['label'] = check_plain(arg(3));
+		$view->exposed_raw_input['label'] = check_plain(arg(3));
+		$view->exposed_data['label'] = check_plain(arg(3));
+		
+		//dpm($view);
+		$view->pre_execute();
+		$view->execute();
+		print $view->render();
+	}
+	
+	
+	
+	
+	/* function moka3ab_apachesolr_index_document_build(ApacheSolrDocument $document, $entity, $entity_type, $env_id) {
+		dpm($entity);  dpm($document); 
+	} */
+	//function moka3ab_apachesolr_search_result_alter($document, &$extra, DrupalSolrQueryInterface $query) { dpm($document);  }
+	
+	/* function moka3ab_theme() {
+	  return array
+		  (
+		  'form_yourmodule_form' => array
+			  (
+			  'render element' => 'form'
+		  ),
+	  );
+	}
+
+	function theme_form_yourmodule_form($variables) {
+
+	} */

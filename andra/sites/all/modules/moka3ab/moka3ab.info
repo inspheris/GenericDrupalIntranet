@@ -1,0 +1,6 @@
+; $Id.
+name = Moka3ab
+description = arte Custom Module.
+core = 7.x
+files[] = moka3ab.module
+project = "custom_module"

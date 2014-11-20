@@ -1,0 +1,284 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.2.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+}
+ol, ul, ul li.leaf, ul li {
+    list-style: none outside none;
+}
+p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address, fieldset, div {
+   font-family: 'Open Sans', arial;
+}
+.page {
+  /* background: url("http://files.almodif.com/telcar/bg.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0); */
+}
+body {
+  
+}
+/*****************************************Top*******************************/
+.region-branding-inner > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+.logo-img img {
+  height: auto;
+  width: 100%;
+}
+.branding-data {
+  width: 140px;
+}
+.block-menu-menu-top-menu .content li {
+  display: inline-block;
+  margin: -5px 8px 0;
+  vertical-align: middle;
+}
+.block-menu-menu-top-menu .content li a {
+  color: #333;
+  font-size: 14px;
+}
+textarea, select, input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"] {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #666;
+  font-size: 15px;
+  height: 35px;
+  padding-left: 8px;
+  width: 100%;
+}
+#views-exposed-form-chercher-page input[type="text"] {
+  background-color: #f1f1f1;
+  border-color: #f1f1f1;
+}
+#views-exposed-form-chercher-page {
+  position: relative;
+}
+#edit-submit-chercher {
+  background: none repeat scroll 0 0 transparent;
+  border: medium none;
+  display: block;
+  height: 34px;
+  margin: 0 0 0 -45px;
+  padding: 0;
+  position: relative;
+  text-indent: -9999px;
+  width: 45px;
+  z-index: 2;
+}
+#views-exposed-form-chercher-page .views-exposed-widget.views-submit-button:after {
+  background: none repeat scroll 0 0 transparent;
+  color: gray;
+  content: "\f002";
+  display: inline-block;
+  font-family: FontAwesome;
+  font-size: 20px;
+  height: 34px;
+  position: absolute;
+  right: 15px;
+  top: 9px;
+  width: 25px;
+}
+.block-menu-menu-top-menu .content li.last a {
+  display: inline-block;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: -2px;
+  overflow: hidden;
+  position: relative;
+  top: -6px;
+}
+.user-wrapper > div {
+  display: inline-block;
+  font-size: 23px;
+  margin: 0 6px;
+  vertical-align: top;
+}
+.article-post .fa.fa-pencil-square-o:after {
+  content: "\f044";
+  font-family: FontAwesome;
+}
+.quick-post .fa.fa-pencil-square-o:after {
+  content: "\f045";
+  color: #777;
+  font-family: FontAwesome;
+}
+.logout-now .fa.fa-sign-out:after {
+  content: "\f08b";
+  color: #777;
+  font-family: FontAwesome;
+}
+.user-picture img {
+  width: 35px;
+}
+.block-views-exp-chercher-page #edit-combine-wrapper {
+  padding-right: 0;
+}
+#zone-branding-wrapper {
+  border-bottom: 5px solid #193751;
+}
+#block-block-1 {
+  background-color: #1b374f;
+  padding: 19px 10px 21px;
+}
+/********************************* Carousel ****************************/
+.square-article img {
+  height: auto;
+  width: 100%;
+}
+.jcarousel-skin-default div.jcarousel-container-horizontal {
+  height: 206px;
+  margin: auto auto auto -44px;
+  width: 940px;
+}
+.jcarousel-skin-default div.jcarousel-clip-horizontal {
+  overflow: hidden;
+  width: 940px;
+}
+.jcarousel-skin-default li.jcarousel-item {
+  border: 1px solid #ccc;
+  height: 213px;
+  width: 303px;
+}
+.jcarousel-skin-default .jcarousel-next-disabled, .jcarousel-skin-default .jcarousel-prev-disabled {
+  display: block;
+}
+.jcarousel-skin-default a.jcarousel-prev-horizontal {
+  left: 0;
+  top: 120px;
+}
+.jcarousel-skin-default a.jcarousel-next-horizontal {
+  right: 0;
+  top: 115px;
+}
+.square-article {
+  height: 213px;
+  position: relative;
+}
+.square-article > a {
+  background-color: black;
+}
+.square-article > a {
+  height: auto;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.square-article > header {
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 2px;
+  margin: 6px;
+  position: absolute;
+  text-align: left;
+  width: 96%;
+}
+.square-article header > div {
+  display: inline-block;
+}
+.img-grp {
+  display: inline-block;
+  margin-right: 4px;
+  position: relative;
+  width: 39px;
+}
+.txt-header > div:first-child a {
+  color: #549e3a;
+  font-weight: bold;
+}
+.txt-header > div {
+  color: #999;
+  font-weight: bold;
+}
+.txt-header > div:last-child a {
+  color: #555;
+}
+.square-article > a img {
+  opacity: 0.85;
+}
+.square-article h4 {
+  bottom: -2px;
+  color: #ccc;
+  font-size: 13px;
+  height: 40px;
+  letter-spacing: 0;
+  margin: 5px;
+  overflow: hidden;
+  position: absolute;
+  text-align: left;
+  text-shadow: 0 0 1px gray;
+}
+.square-article h3 {
+  color: white;
+  font-size: 17px;
+  height: 50px;
+  margin-bottom: 0;
+  margin-left: 5px;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  top: 119px;
+  z-index: 3;
+}
+/************************** Content *********************/
+.view-articles .view-display-id-attachment_1 {
+  display: inline-block;
+  margin-right: 9px;
+  vertical-align: top;
+  width: 617px;
+}
+.view-articles .view-display-id-attachment_2 {
+  display: inline-block;
+  width: 304px;
+}
+.view-articles .view-display-id-attachment_1 h3 {
+  height: 30px;
+  top: 150px;
+}
+.view-articles .view-display-id-attachment_1 h4 {
+  color: white;
+  top: 175px;
+}
+.view-articles .view-display-id-attachment_1 .square-article > header {
+  width: 98%;
+}
+.view-articles.view-display-id-page > .view-content {
+  margin-bottom: 15px;
+}
+.view-articles.view-display-id-page > .view-content .views-row {
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: top;
+  width: 302px;
+}
+.view-articles.view-display-id-page > .view-content .views-row:nth-child(2n+1) {
+  margin: 0 5px;
+}
+.view-articles .views-row {
+  border: 1px solid #eee;
+}
+.fichier-wrapper {
+  width: 50px;
+}
+
+
+
+
+
+
+@media all and (max-width: 1200px) { 
+	
+}
