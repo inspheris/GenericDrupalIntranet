@@ -1,11 +1,11 @@
 ﻿<article<?php print $attributes; ?>>
-  <?php print $user_picture; ?>
+  <!-- <?php print $user_picture; ?> -->
   <?php print render($title_prefix); ?>
   <?php if (!$page && $title): ?>
   <?php endif; ?>
   <?php print render($title_suffix); ?>
   <?php if ($display_submitted): ?>
-  <footer class="submitted"><?php print $date; ?> -- <?php print $name; ?></footer>
+  <!-- <footer class="submitted"><?php print $date; ?> -- <?php print $name; ?></footer> -->
   <?php endif; ?>  
   <div<?php print $content_attributes; ?>>
 	<div class="breadcumb-wrapper">
@@ -21,6 +21,7 @@
 		  // We hide the comments and links now so that we can render them later.
 		  hide($content['comments']);
 		  hide($content['links']);
+		  hide($content['field_hashtags']);
 		  print render($content);
 		?>
 	</div>

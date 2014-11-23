@@ -24,7 +24,7 @@
  */
 function _l10n_update_locale_import_po($file, $langcode, $mode, $group = NULL) {
   // Try to allocate enough time to parse and import the data.
-  drupal_set_time_limit(240);
+  drupal_set_time_limit(0);
 
   // Check if we have the language already in the database.
   if (!db_query("SELECT COUNT(language) FROM {languages} WHERE language = :language", array(':language' => $langcode))->fetchField()) {
