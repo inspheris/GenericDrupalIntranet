@@ -601,8 +601,10 @@ footer.submitted {
   width: 100%;
 }
 .header-article > h2 {
-  color: white;
-  margin: -100px 0 0 20px;
+color: white;
+margin: -135px 0 0 20px;
+max-height: 80px;
+overflow: hidden;
 }
 .header-article h4 {
   color: #ccc;
@@ -610,7 +612,7 @@ footer.submitted {
   letter-spacing: 0;
   margin-bottom: 10px;
   margin-left: 20px;
-  height: 50px;
+  max-height: 50px;
 }
 .article-wrapper {
   color: #444;
