@@ -226,7 +226,7 @@ textarea, select, input[type="date"], input[type="datetime"], input[type="dateti
   overflow: hidden;
   position: absolute;
   text-align: left;
-  text-shadow: 0 0 1px gray;
+  text-shadow: 0 0 6px black;
 }
 .square-article h3 {
   color: white;
